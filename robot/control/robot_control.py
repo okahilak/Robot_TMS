@@ -16,7 +16,7 @@ import robot.control.robot_processing as robot_process
 
 from robot.control.robot_state_controller import RobotStateController, RobotState
 from robot.control.algorithms.radially_outwards import RadiallyOutwardsAlgorithm
-from robot.control.algorithms.directly_upwards import DirectlyUpwardsAlgorithm
+from robot.control.algorithms.directly_upward import DirectlyUpwardAlgorithm
 
 
 class RobotControl:
@@ -318,8 +318,8 @@ class RobotControl:
                     robot_config=self.robot_config,
                 )
 
-            elif self.movement_algorithm_name == 'directly_upwards':
-                self.movement_algorithm = DirectlyUpwardsAlgorithm(
+            elif self.movement_algorithm_name == 'directly_upward':
+                self.movement_algorithm = DirectlyUpwardAlgorithm(
                     robot=robot,
                     robot_config=self.robot_config,
                 )
