@@ -413,7 +413,12 @@ class RobotControl:
         # Single-char keys (such as 'n') have the attribute 'char', whereas, e.g., the function keys do not.
         #
         # Hence, check if 'key' has the attribute 'char' and use it if it does.
-        key_str = key.char if hasattr(key, 'char') and key.char is not None else key.name
+        key_str = key.char if hasattr(key, 'char') and key.char is not None else \
+            key.name if hasattr(key, 'name') and key.name is not None \
+            else None
+
+        if key_str is None:
+            return
 
         # Disregard some commonly used modifier keys.
         if key_str in ("caps_lock", "shift", "ctrl_l", "cmd", "alt_l", "tab", \
