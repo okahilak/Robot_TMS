@@ -405,10 +405,9 @@ class RobotControl:
         """
         Listens to keypresses:
 
-          - If 'n' is pressed, normalizes the F-T values.
-          - If any key (except 'n' and any of the modifier keys, such as 'alt' or 'control') is pressed,
-            informs the robot state controller that a keypress has been detected. (Only has an effect if
-            the environment variable WAIT_FOR_KEYPRESS is set to 'true'.)
+          - If 'f1' is pressed, normalizes the F-T values.
+          - If 'f2' is pressed, informs the robot state controller that a keypress has been detected.
+            (Only has an effect if the environment variable PRESS_KEY_BEFORE_MOVEMENT is set to 'true'.)
         """
         # Single-char keys (such as 'n') have the attribute 'char', whereas, e.g., the function keys do not.
         #
@@ -420,18 +419,13 @@ class RobotControl:
         if key_str is None:
             return
 
-        # Disregard some commonly used modifier keys.
-        if key_str in ("caps_lock", "shift", "ctrl_l", "cmd", "alt_l", "tab", \
-                       "alt_gr", "cmd_r", "menu", "ctrl_r", "shift_r"):
-            return
-
-        if key_str == 'n':
-            print("{}Key 'n' pressed: Normalising...{}".format(Color.BOLD, Color.END))
+        if key_str == 'f1':
+            print("{}Key 'f1' pressed: Normalising...{}".format(Color.BOLD, Color.END))
             self.REF_FLAG = True
             return
 
-        print("{}A keypress detected{}".format(Color.BOLD, Color.END))
-        if self.robot_state_controller is not None:
+        elif key_str == 'f2' and self.robot_state_controller is not None and self.config['press_key_before_movement']:
+            print("{}Key 'f2' pressed: Initiating next movement...{}".format(Color.BOLD, Color.END))
             self.robot_state_controller.keypress_detected()
 
     def update_robot_pose(self):
